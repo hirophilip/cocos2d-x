@@ -235,6 +235,9 @@ public:
      @since v0.99.5
      */
     static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    
+    static void setDefaultAntiAlias(bool on);
+    static bool defaultAntiAlias();
 
     /** content size */
     const CCSize& getContentSizeInPixels();

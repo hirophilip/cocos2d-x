@@ -59,6 +59,7 @@ static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelForma
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
+static bool defaultAntiAlias_ = true;
 
 CCTexture2D::CCTexture2D()
 : m_bPVRHaveAlphaPremultiplied(true)
@@ -172,6 +173,14 @@ bool CCTexture2D::hasPremultipliedAlpha()
     return m_bHasPremultipliedAlpha;
 }
 
+void CCTexture2D::setDefaultAntiAlias(bool on) {
+    defaultAntiAlias_ = on;
+}
+
+bool CCTexture2D::defaultAntiAlias() {
+    return defaultAntiAlias_;
+}
+
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
     // XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
@@ -187,8 +196,10 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
 
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    if (defaultAntiAlias_) setAntiAliasTexParameters();
+    else setAliasTexParameters();
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 

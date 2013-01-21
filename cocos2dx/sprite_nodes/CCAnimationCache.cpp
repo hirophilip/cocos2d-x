@@ -100,6 +100,8 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
         CCDictionary* animationDict = (CCDictionary*)pElement->getObject();
         CCArray* frameNames = (CCArray*)animationDict->objectForKey("frames");
         float delay = animationDict->valueForKey("delay")->floatValue();
+        int loops = animationDict->valueForKey("loops")->intValue();
+        if (loops < 0) loops = HUGE_VAL;
         CCAnimation* animation = NULL;
 
         if ( frameNames == NULL ) 
@@ -136,7 +138,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
             CCLOG("cocos2d: CCAnimationCache: An animation in your dictionary refers to a frame which is not in the CCSpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", pElement->getStrKey());
         }
 
-        animation = CCAnimation::create(frames, delay, 1);
+        animation = CCAnimation::create(frames, delay, loops);
 
         CCAnimationCache::sharedAnimationCache()->addAnimation(animation, pElement->getStrKey());
         frames->release();

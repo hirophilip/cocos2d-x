@@ -95,7 +95,7 @@ public:
 #define CCPointMake(x, y) CCPoint((float)(x), (float)(y))
 #define CCSizeMake(width, height) CCSize((float)(width), (float)(height))
 #define CCRectMake(x, y, width, height) CCRect((float)(x), (float)(y), (float)(width), (float)(height))
-
+#define ccz(width, height) CCSize((float)(width), (float)(height))
 
 const CCPoint CCPointZero = CCPointMake(0,0);
 

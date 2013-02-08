@@ -133,10 +133,10 @@ bool CCScrollView::init()
     return this->initWithViewSize(CCSizeMake(200, 200), NULL);
 }
 
-void CCScrollView::registerWithTouchDispatcher()
-{
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
-}
+//void CCScrollView::registerWithTouchDispatcher()
+//{
+//    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+//}
 
 bool CCScrollView::isNodeVisible(CCNode* node)
 {
@@ -644,29 +644,26 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             moveDistance = ccpSub(newPoint, m_tTouchPoint);
             m_tTouchPoint  = newPoint;
             
-            if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
+            switch (m_eDirection)
             {
-                switch (m_eDirection)
-                {
-                    case kCCScrollViewDirectionVertical:
-                        moveDistance = ccp(0.0f, moveDistance.y);
-                        break;
-                    case kCCScrollViewDirectionHorizontal:
-                        moveDistance = ccp(moveDistance.x, 0.0f);
-                        break;
-                    default:
-                        break;
-                }
-                
-                maxInset = m_fMaxInset;
-                minInset = m_fMinInset;
-
-                newX     = m_pContainer->getPosition().x + moveDistance.x;
-                newY     = m_pContainer->getPosition().y + moveDistance.y;
-
-                m_tScrollDistance = moveDistance;
-                this->setContentOffset(ccp(newX, newY));
+                case kCCScrollViewDirectionVertical:
+                    moveDistance = ccp(0.0f, moveDistance.y);
+                    break;
+                case kCCScrollViewDirectionHorizontal:
+                    moveDistance = ccp(moveDistance.x, 0.0f);
+                    break;
+                default:
+                    break;
             }
+            
+            maxInset = m_fMaxInset;
+            minInset = m_fMinInset;
+
+            newX     = m_pContainer->getPosition().x + moveDistance.x;
+            newY     = m_pContainer->getPosition().y + moveDistance.y;
+
+            m_tScrollDistance = moveDistance;
+            this->setContentOffset(ccp(newX, newY));
         }
         else if (m_pTouches->count() == 2 && !m_bDragging)
         {

@@ -59,7 +59,8 @@ bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = NULL*/)
         m_pTableViewDelegate = NULL;
         m_eVordering      = kCCTableViewFillBottomUp;
         this->setDirection(kCCScrollViewDirectionVertical);
-        
+        this->setTouchMode(kCCTouchesOneByOne);
+        this->setTouchPriority(-1);
         CCScrollView::setDelegate(this);
         return true;
     }

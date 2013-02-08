@@ -345,6 +345,8 @@ static EAGLView *view = 0;
     return pFormat;
 }
 
+- (NSArray *)selectionRectsForRange:(UITextRange *)range { return NULL; }
+
 #pragma mark EAGLView - Point conversion
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point

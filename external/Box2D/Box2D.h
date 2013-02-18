@@ -19,6 +19,9 @@
 #ifndef BOX2D_H
 #define BOX2D_H
 
+#define PTM_RATIO 32.0f
+#define PTM_RATIO2 64.0f
+
 /**
 \mainpage Box2D API Documentation
 

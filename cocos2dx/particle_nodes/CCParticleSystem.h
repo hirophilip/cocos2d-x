@@ -344,6 +344,10 @@ public:
     @endcode
     */
     bool m_bIsBlendAdditive;
+    
+    /** particles movement rounded x,y positions **/
+    bool m_nonFloatPosition;
+    
     /** particles movement type: Free or Grouped
     @since v0.8
     */

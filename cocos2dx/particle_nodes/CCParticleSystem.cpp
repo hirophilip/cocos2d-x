@@ -109,6 +109,7 @@ CCParticleSystem::CCParticleSystem()
     ,m_pTexture(NULL)
     ,m_bOpacityModifyRGB(false)
     ,m_bIsBlendAdditive(false)
+    ,m_nonFloatPosition(false)
     ,m_ePositionType(kCCPositionTypeFree)
     ,m_bIsAutoRemoveOnFinish(false)
     ,m_nEmitterMode(kCCParticleModeGravity)
@@ -665,7 +666,9 @@ void CCParticleSystem::update(float dt)
                     tmp = ccpMult( tmp, dt);
                     p->modeA.dir = ccpAdd( p->modeA.dir, tmp);
                     tmp = ccpMult(p->modeA.dir, dt);
-                    p->pos = ccpAdd( p->pos, tmp );
+                    CCPoint np = ccpAdd( p->pos, tmp );
+                    if (m_nonFloatPosition) p->pos = ccp(floor(np.x), floor(np.y));
+                    else p->pos = np;
                 }
 
                 // Mode B: radius movement

@@ -39,6 +39,7 @@ THE SOFTWARE.
 #import "CCWindow.h"
 #import "CCEventDispatcher.h"
 #import "CCEGLView.h"
+#include "keypad_dispatcher/CCKeyboardDispatcher.h"
 
 
 //USING_NS_CC;
@@ -447,23 +448,26 @@ static EAGLView *view;
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
-	
-	// pass the event along to the next responder (like your NSWindow subclass)
-	[super keyDown:theEvent];
+    unsigned short code = [theEvent keyCode];
+    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardDown(code);
+    // pass the event along to the next responder (like your NSWindow subclass)
+    if (!handled) [super keyDown:theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
-
-	// pass the event along to the next responder (like your NSWindow subclass)
-	[super keyUp:theEvent];
+    unsigned short code = [theEvent keyCode];
+    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardUp(code);
+    // pass the event along to the next responder (like your NSWindow subclass)
+    if (!handled) [super keyUp:theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	int mask = [theEvent modifierFlags];
+    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardFlagsChanged(mask);
+    // pass the event along to the next responder (like your NSWindow subclass)
+    if (!handled) [super flagsChanged:theEvent];
 }
 
 #pragma mark EAGLView - Touch events

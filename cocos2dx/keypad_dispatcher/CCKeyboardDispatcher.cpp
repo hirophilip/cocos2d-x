@@ -118,7 +118,7 @@ void CCKeyboardDispatcher::forceRemoveDelegate(CCKeyboardDelegate* pDelegate)
     }
 }
 
-bool CCKeyboardDispatcher::dispatchKeyboardDown(unsigned short keyCode)
+bool CCKeyboardDispatcher::dispatchKeyboardDown(CCKeyboardEvent event)
 {
     CCKeyboardHandler*  pHandler = NULL;
     CCKeyboardDelegate* pDelegate = NULL;
@@ -134,7 +134,7 @@ bool CCKeyboardDispatcher::dispatchKeyboardDown(unsigned short keyCode)
 
             pHandler = (CCKeyboardHandler*)pObj;
             pDelegate = pHandler->getDelegate();
-            pDelegate->ccKeyDown(keyCode);
+            pDelegate->ccKeyDown(event);
         }
         wasDispatched = true;
     }
@@ -162,7 +162,7 @@ bool CCKeyboardDispatcher::dispatchKeyboardDown(unsigned short keyCode)
     return wasDispatched;
 }
 
-bool CCKeyboardDispatcher::dispatchKeyboardUp(unsigned short keyCode)
+bool CCKeyboardDispatcher::dispatchKeyboardUp(CCKeyboardEvent event)
 {
     CCKeyboardHandler*  pHandler = NULL;
     CCKeyboardDelegate* pDelegate = NULL;
@@ -178,7 +178,7 @@ bool CCKeyboardDispatcher::dispatchKeyboardUp(unsigned short keyCode)
             
             pHandler = (CCKeyboardHandler*)pObj;
             pDelegate = pHandler->getDelegate();
-            pDelegate->ccKeyUp(keyCode);
+            pDelegate->ccKeyUp(event);
         }
         wasDispatched = true;
     }
@@ -206,7 +206,7 @@ bool CCKeyboardDispatcher::dispatchKeyboardUp(unsigned short keyCode)
     return wasDispatched;
 }
 
-bool CCKeyboardDispatcher::dispatchKeyboardFlagsChanged(int maskCode)
+bool CCKeyboardDispatcher::dispatchKeyboardFlagsChanged(CCKeyboardEvent event)
 {
     CCKeyboardHandler*  pHandler = NULL;
     CCKeyboardDelegate* pDelegate = NULL;
@@ -222,7 +222,7 @@ bool CCKeyboardDispatcher::dispatchKeyboardFlagsChanged(int maskCode)
             
             pHandler = (CCKeyboardHandler*)pObj;
             pDelegate = pHandler->getDelegate();
-            pDelegate->ccKeyFlagsChanged(maskCode);
+            pDelegate->ccKeyFlagsChanged(event);
         }
         wasDispatched = true;
     }

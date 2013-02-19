@@ -30,6 +30,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct CCKeyboardEvent {
+    unsigned short keyCode;
+    int modifierFlags;
+    const char alpha;
+    
+    CCKeyboardEvent(unsigned short k, int m, const char a) : keyCode(k), modifierFlags(m), alpha(a) {}
+};
 /**
  * @addtogroup input
  * @{
@@ -39,13 +46,13 @@ class CC_DLL CCKeyboardDelegate
 {
 public:
     // A key was pressed Down
-    virtual void ccKeyDown(unsigned short keyCode) {}
+    virtual void ccKeyDown(CCKeyboardEvent event) {}
 
     // A key was released Up
-    virtual void ccKeyUp(unsigned short keyCode) {};
+    virtual void ccKeyUp(CCKeyboardEvent event) {};
     
     // A system key state was changed
-    virtual void ccKeyFlagsChanged(int maskCode) {};
+    virtual void ccKeyFlagsChanged(CCKeyboardEvent event) {};
 };
 
 /**

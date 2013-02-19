@@ -448,24 +448,24 @@ static EAGLView *view;
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-    unsigned short code = [theEvent keyCode];
-    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardDown(code);
+    cocos2d::CCKeyboardEvent kEvent([theEvent keyCode], [theEvent modifierFlags], [theEvent characters].UTF8String[0]);
+    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardDown(kEvent);
     // pass the event along to the next responder (like your NSWindow subclass)
     if (!handled) [super keyDown:theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-    unsigned short code = [theEvent keyCode];
-    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardUp(code);
+    cocos2d::CCKeyboardEvent kEvent([theEvent keyCode], [theEvent modifierFlags], [theEvent characters].UTF8String[0]);
+    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardUp(kEvent);
     // pass the event along to the next responder (like your NSWindow subclass)
     if (!handled) [super keyUp:theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-	int mask = [theEvent modifierFlags];
-    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardFlagsChanged(mask);
+	cocos2d::CCKeyboardEvent kEvent([theEvent keyCode], [theEvent modifierFlags], [theEvent characters].UTF8String[0]);
+    bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardFlagsChanged(kEvent);
     // pass the event along to the next responder (like your NSWindow subclass)
     if (!handled) [super flagsChanged:theEvent];
 }

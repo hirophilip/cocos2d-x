@@ -154,9 +154,9 @@ public:
     
     virtual bool isKeyboardEnabled();
     virtual void setKeyboardEnabled(bool value);
-    virtual void ccKeyDown(unsigned short keyCode) {};
-    virtual void ccKeyUp(unsigned short keyCode) {};
-    virtual void ccKeyFlagsChanged(int maskCode) {};
+    virtual void ccKeyDown(CCKeyboardEvent event) {};
+    virtual void ccKeyUp(CCKeyboardEvent event) {};
+    virtual void ccKeyFlagsChanged(CCKeyboardEvent event) {};
 protected:   
     bool m_bTouchEnabled;
     bool m_bAccelerometerEnabled;

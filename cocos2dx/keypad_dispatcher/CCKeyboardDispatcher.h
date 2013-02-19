@@ -43,6 +43,7 @@ typedef enum {
 } ccKeyboardMSGType;
 
 struct _ccCArray;
+
 /**
 @class CCKeyboardDispatcher
 @brief Dispatch the Keyboard message from the phone
@@ -76,17 +77,17 @@ public:
     /**
     @brief dispatch the key down
     */
-    bool dispatchKeyboardDown(unsigned short keyCode);
+    bool dispatchKeyboardDown(CCKeyboardEvent event);
     
     /**
     @brief dispatch the key up
     */
-    bool dispatchKeyboardUp(unsigned short keyCode);
+    bool dispatchKeyboardUp(CCKeyboardEvent event);
 
     /**
      @brief dispatch the change in system keys
      */
-    bool dispatchKeyboardFlagsChanged(int maskCode);
+    bool dispatchKeyboardFlagsChanged(CCKeyboardEvent event);
     
 protected:
 

@@ -40,9 +40,10 @@ THE SOFTWARE.
 #import "CCEventDispatcher.h"
 #import "CCEGLView.h"
 #include "keypad_dispatcher/CCKeyboardDispatcher.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
 
 
-//USING_NS_CC;
+USING_NS_CC;
 static EAGLView *view;
 
 @implementation EAGLView
@@ -324,19 +325,19 @@ static EAGLView *view;
 {
 	NSPoint event_location = [theEvent locationInWindow];
 	NSPoint local_point = [self convertPoint:event_location fromView:nil];
-	
-	float x = local_point.x;
-	float y = [self getHeight] - local_point.y;
-	
-    int ids[1] = {0};
-    float xs[1] = {0.0f};
-    float ys[1] = {0.0f};
+	   
+    touchEvent eTouch;
+    eTouch.tid = 0;
+    eTouch.point = CCPoint(local_point.x / frameZoomFactor_, ([self getHeight] - local_point.y) / frameZoomFactor_);
+    eTouch.tapCount = [theEvent clickCount];
+    eTouch.timestamp = [theEvent timestamp];
     
-	ids[0] = [theEvent eventNumber];
-	xs[0] = x / frameZoomFactor_;
-	ys[0] = y / frameZoomFactor_;
-
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys);
+    CCTouch* ccTouch = new CCTouch();
+    ccTouch->m_event = eTouch;
+    
+    CCSet touches;
+    touches.addObject(ccTouch);
+	cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesBegan(&touches, NULL);
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -349,18 +350,18 @@ static EAGLView *view;
 	NSPoint event_location = [theEvent locationInWindow];
 	NSPoint local_point = [self convertPoint:event_location fromView:nil];
 	
-	float x = local_point.x;
-	float y = [self getHeight] - local_point.y;
-
-    int ids[1] = {0};
-    float xs[1] = {0.0f};
-    float ys[1] = {0.0f};
+    touchEvent eTouch;
+    eTouch.tid = 0;
+    eTouch.point = CCPoint(local_point.x / frameZoomFactor_, ([self getHeight] - local_point.y) / frameZoomFactor_);
+    eTouch.tapCount = [theEvent clickCount];
+    eTouch.timestamp = [theEvent timestamp];
     
-	ids[0] = [theEvent eventNumber];
-	xs[0] = x / frameZoomFactor_;
-	ys[0] = y / frameZoomFactor_;
-
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesMove(1, ids, xs, ys);
+    CCTouch* ccTouch = new CCTouch();
+    ccTouch->m_event = eTouch;
+    
+    CCSet touches;
+    touches.addObject(ccTouch);
+	cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesMoved(&touches, NULL);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
@@ -368,18 +369,18 @@ static EAGLView *view;
 	NSPoint event_location = [theEvent locationInWindow];
 	NSPoint local_point = [self convertPoint:event_location fromView:nil];
 	
-	float x = local_point.x;
-	float y = [self getHeight] - local_point.y;
-
-    int ids[1] = {0};
-    float xs[1] = {0.0f};
-    float ys[1] = {0.0f};
+    touchEvent eTouch;
+    eTouch.tid = 0;
+    eTouch.point = CCPoint(local_point.x / frameZoomFactor_, ([self getHeight] - local_point.y) / frameZoomFactor_);
+    eTouch.tapCount = [theEvent clickCount];
+    eTouch.timestamp = [theEvent timestamp];
     
-	ids[0] = [theEvent eventNumber];
-	xs[0] = x / frameZoomFactor_;
-	ys[0] = y / frameZoomFactor_;
-
-	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesEnd(1, ids, xs, ys);
+    CCTouch* ccTouch = new CCTouch();
+    ccTouch->m_event = eTouch;
+    
+    CCSet touches;
+    touches.addObject(ccTouch);
+	cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesEnded(&touches, NULL);
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {

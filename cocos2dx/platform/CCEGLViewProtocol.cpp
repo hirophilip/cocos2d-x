@@ -167,14 +167,12 @@ const char* CCEGLViewProtocol::getViewName()
     return m_szViewName;
 }
 
-void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
+void CCEGLViewProtocol::handleTouchesBegin(int num, touchEvent ids[])
 {
     CCSet set;
     for (int i = 0; i < num; ++i)
     {
-        int id = ids[i];
-        float x = xs[i];
-        float y = ys[i];
+        int id = ids[i].tid;
 
         CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
         int nUnusedIndex = 0;
@@ -191,8 +189,9 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             }
 
             CCTouch* pTouch = s_pTouches[nUnusedIndex] = new CCTouch();
-			pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fScaleX, 
-                                     (y - m_obViewPortRect.origin.y) / m_fScaleY);
+            pTouch->m_nId = nUnusedIndex;
+            pTouch->m_event = ids[i];
+			//pTouch->setTouchInfo(nUnusedIndex, (x - m_obViewPortRect.origin.x) / m_fScaleX, (y - m_obViewPortRect.origin.y) / m_fScaleY);
             
             //CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             

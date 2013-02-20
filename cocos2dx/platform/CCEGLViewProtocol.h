@@ -2,6 +2,7 @@
 #define __CCEGLVIEWPROTOCOL_H__
 
 #include "ccTypes.h"
+#include "touch_dispatcher/CCTouch.h"
 
 enum ResolutionPolicy
 {
@@ -103,7 +104,7 @@ public:
     const char* getViewName();
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
-    virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesBegin(int num, touchEvent ids[]);
     virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
     virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);

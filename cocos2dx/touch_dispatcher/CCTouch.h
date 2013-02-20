@@ -30,6 +30,15 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+
+struct touchEvent {
+    int tid;
+    CCPoint point;
+    CCPoint previousPoint;
+    int tapCount;
+    int buttonIndex;
+    double timestamp;
+};
 /**
  * @addtogroup input
  * @{
@@ -65,15 +74,17 @@ public:
     {
         return m_nId;
     }
-
-private:
+    touchEvent m_event;
     int m_nId;
+private:
     CCPoint m_point;
     CCPoint m_prevPoint;
 };
 
 class CC_DLL CCEvent : public CCObject
 {
+public:
+    double m_timeStamp;
 };
 
 // end of input group

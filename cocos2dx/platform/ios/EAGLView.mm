@@ -71,8 +71,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCIMEDispatcher.h"
 #import "OpenGL_Internal.h"
 #import "CCEGLView.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
 //CLASS IMPLEMENTATIONS:
 
+USING_NS_CC;
 #define IOS_MAX_TOUCHES_COUNT     10
 
 static EAGLView *view = 0;
@@ -395,92 +397,94 @@ static EAGLView *view = 0;
 #pragma mark EAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
+    if (isKeyboardShown_) {
         [self handleTouchesAfterKeyboardShow];
         return;
     }
-    touchEvent ccTouches[IOS_MAX_TOUCHES_COUNT];
     
-//    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
-//    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-//    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-//    
-    int i = 0;
-    for (UITouch *touch in touches) {
-        CGPoint loc = [touch locationInView:[touch view]];
-        ccTouches[i].tid = (int)touch;
-        ccTouches[i].point = CCPointMake(loc.x * view.contentScaleFactor, loc.y * view.contentScaleFactor);
-        ccTouches[i].tapCount = [touch tapCount];
-        ccTouches[i].timestamp = [touch timestamp];
-//        ids[i] = (int)touch;
-//        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-//        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
-        ++i;
-    }
-    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, ccTouches);
+    [touches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(UITouch* aTouch, BOOL *stop) {
+        CGPoint local_point = [aTouch locationInView:[aTouch view]];
+        
+        touchEvent eTouch;
+        eTouch.tid = (int)aTouch;
+        eTouch.point = CCPoint(local_point.x * view.contentScaleFactor, [self getHeight] - (local_point.y * view.contentScaleFactor));
+        eTouch.tapCount = [aTouch tapCount];
+        eTouch.timestamp = [aTouch timestamp];
+        NSLog(@"x:%f y:%f",eTouch.point.x, eTouch.point.y);
+        CCTouch* ccTouch = new CCTouch();
+        ccTouch->m_event = eTouch;
+        
+        CCSet cctouches;
+        cctouches.addObject(ccTouch);
+        cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesBegan(&cctouches, NULL);
+    }];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
-    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-    
-    int i = 0;
-    for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
-        ++i;
-    }
-    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesMove(i, ids, xs, ys);
+    if (isKeyboardShown_) return;
+
+    [touches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(UITouch* aTouch, BOOL *stop) {
+        CGPoint local_point = [aTouch locationInView:[aTouch view]];
+        
+        touchEvent eTouch;
+        eTouch.tid = 0;
+        eTouch.point = CCPoint(local_point.x * view.contentScaleFactor, [self getHeight] - (local_point.y * view.contentScaleFactor));
+        eTouch.tapCount = [aTouch tapCount];
+        eTouch.timestamp = [aTouch timestamp];
+        NSLog(@"x:%f y:%f",eTouch.point.x, eTouch.point.y);
+        CCTouch* ccTouch = new CCTouch();
+        ccTouch->m_event = eTouch;
+        
+        CCSet cctouches;
+        cctouches.addObject(ccTouch);
+        cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesMoved(&cctouches, NULL);
+    }];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
-    
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
-    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-    
-    int i = 0;
-    for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
-        ++i;
-    }
-    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesEnd(i, ids, xs, ys);
+    if (isKeyboardShown_) return;
+
+    [touches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(UITouch* aTouch, BOOL *stop) {
+        CGPoint local_point = [aTouch locationInView:[aTouch view]];
+        
+        touchEvent eTouch;
+        eTouch.tid = 0;
+        eTouch.point = CCPoint(local_point.x * view.contentScaleFactor, [self getHeight] - (local_point.y * view.contentScaleFactor));
+        eTouch.tapCount = [aTouch tapCount];
+        eTouch.timestamp = [aTouch timestamp];
+        NSLog(@"x:%f y:%f",eTouch.point.x, eTouch.point.y);
+        CCTouch* ccTouch = new CCTouch();
+        ccTouch->m_event = eTouch;
+        
+        CCSet cctouches;
+        cctouches.addObject(ccTouch);
+        cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesEnded(&cctouches, NULL);
+    }];
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
+    if (isKeyboardShown_) return;
     
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
-    float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-    float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
-    
-    int i = 0;
-    for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
-        ++i;
-    }
-    cocos2d::CCEGLView::sharedOpenGLView()->handleTouchesCancel(i, ids, xs, ys);
+    [touches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(UITouch* aTouch, BOOL *stop) {
+        CGPoint local_point = [aTouch locationInView:[aTouch view]];
+        
+        touchEvent eTouch;
+        eTouch.tid = 0;
+        eTouch.point = CCPoint(local_point.x * view.contentScaleFactor, [self getHeight] - (local_point.y * view.contentScaleFactor));
+        eTouch.tapCount = [aTouch tapCount];
+        eTouch.timestamp = [aTouch timestamp];
+        NSLog(@"x:%f y:%f",eTouch.point.x, eTouch.point.y);
+        CCTouch* ccTouch = new CCTouch();
+        ccTouch->m_event = eTouch;
+        
+        CCSet cctouches;
+        cctouches.addObject(ccTouch);
+        ccTouch->release();
+        cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesCancelled(&cctouches, NULL);
+    }];
 }
 
 #pragma mark -

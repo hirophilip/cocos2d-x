@@ -325,18 +325,19 @@ static EAGLView *view;
 {
 	NSPoint event_location = [theEvent locationInWindow];
 	NSPoint local_point = [self convertPoint:event_location fromView:nil];
-	   
+    
     touchEvent eTouch;
     eTouch.tid = 0;
-    eTouch.point = CCPoint(local_point.x / frameZoomFactor_, ([self getHeight] - local_point.y) / frameZoomFactor_);
+    eTouch.point = CCPoint(local_point.x / frameZoomFactor_, local_point.y / frameZoomFactor_);
     eTouch.tapCount = [theEvent clickCount];
     eTouch.timestamp = [theEvent timestamp];
-    
+    NSLog(@"x:%f y:%f",eTouch.point.x, eTouch.point.y);
     CCTouch* ccTouch = new CCTouch();
     ccTouch->m_event = eTouch;
     
     CCSet touches;
     touches.addObject(ccTouch);
+    ccTouch->release();
 	cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->touchesBegan(&touches, NULL);
 }
 
@@ -452,7 +453,10 @@ static EAGLView *view;
     cocos2d::CCKeyboardEvent kEvent([theEvent keyCode], [theEvent modifierFlags], [theEvent characters].UTF8String[0]);
     bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardDown(kEvent);
     // pass the event along to the next responder (like your NSWindow subclass)
-    if (!handled) [super keyDown:theEvent];
+    //if (!handled) [super keyDown:theEvent];
+    if ([theEvent keyCode] == 53 && isFullScreen_) {
+        [self setFullScreen:NO];
+    }
 }
 
 - (void)keyUp:(NSEvent *)theEvent
@@ -460,7 +464,7 @@ static EAGLView *view;
     cocos2d::CCKeyboardEvent kEvent([theEvent keyCode], [theEvent modifierFlags], [theEvent characters].UTF8String[0]);
     bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardUp(kEvent);
     // pass the event along to the next responder (like your NSWindow subclass)
-    if (!handled) [super keyUp:theEvent];
+    //if (!handled) [super keyUp:theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
@@ -468,7 +472,7 @@ static EAGLView *view;
 	cocos2d::CCKeyboardEvent kEvent([theEvent keyCode], [theEvent modifierFlags], [theEvent characters].UTF8String[0]);
     bool handled = cocos2d::CCDirector::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardFlagsChanged(kEvent);
     // pass the event along to the next responder (like your NSWindow subclass)
-    if (!handled) [super flagsChanged:theEvent];
+    //if (!handled) [super flagsChanged:theEvent];
 }
 
 #pragma mark EAGLView - Touch events

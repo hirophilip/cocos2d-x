@@ -37,7 +37,8 @@ struct touchEvent {
     CCPoint previousPoint;
     int tapCount;
     int buttonIndex;
-    double timestamp;
+    double timestamp;    
+    
 };
 /**
  * @addtogroup input

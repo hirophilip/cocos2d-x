@@ -3,6 +3,7 @@
 #include "ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -127,6 +128,19 @@ unsigned int CCString::length() const
 int CCString::compare(const char * pStr) const
 {
     return strcmp(getCString(), pStr);
+}
+
+CCArray* CCString::componentsSeparatedByChar(const char c)
+{
+    std::stringstream ss(m_sString);
+    std::string item;
+    CCArray* arr = CCArray::createWithCapacity(10);
+    CCString* str;
+    while (std::getline(ss, item, c)) {
+        str = CCString::create(item);
+        arr->addObject(str);
+    }
+    return arr;
 }
 
 CCObject* CCString::copyWithZone(CCZone* pZone)

@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include <string>
 #include <functional>
 #include "CCObject.h"
+#include "CCArray.h"
 
 NS_CC_BEGIN
 
@@ -79,6 +80,8 @@ public:
 
     /** compare to a c string */
     int compare(const char *) const;
+    
+    CCArray* componentsSeparatedByChar(const char c);
 
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);

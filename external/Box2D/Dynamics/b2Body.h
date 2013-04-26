@@ -821,9 +821,9 @@ inline void b2Body::SynchronizeTransform()
 {
     m_xf.q.Set(m_sweep.a);
     m_xf.p = m_sweep.c - b2Mul(m_xf.q, m_sweep.localCenter);
-    if ( m_xf.p.x != m_xf.p.x ) {
-        printf( "ERROR_1\n" );
-    }
+//    if ( m_xf.p.x != m_xf.p.x ) {
+//        printf( "ERROR_1\n" ); //NAN issue
+//    }
 }
 
 inline void b2Body::Advance(float32 alpha)

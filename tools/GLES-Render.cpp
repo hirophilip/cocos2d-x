@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include "B2Sprite.h"
 
 CCDebugNode::CCDebugNode(b2World* world) {
     m_b2World = world;

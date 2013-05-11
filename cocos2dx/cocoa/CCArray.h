@@ -115,6 +115,8 @@ while(false)
 
 NS_CC_BEGIN
 
+class CCString;
+
 class CC_DLL CCArray : public CCObject
 {
 public:
@@ -164,6 +166,8 @@ public:
     unsigned int indexOfObject(CCObject* object);
     /** Returns an element with a certain index */
     CCObject* objectAtIndex(unsigned int index);
+    /** Returns an element with a certain index */
+    CCString* valueAtIndex(unsigned int index);
     /** Returns last element */
     CCObject* lastObject();
     /** Returns a random element */

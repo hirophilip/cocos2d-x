@@ -32,9 +32,10 @@ THE SOFTWARE.
 #include <string>
 #include <functional>
 #include "CCObject.h"
-#include "CCArray.h"
 
 NS_CC_BEGIN
+
+class CCArray;
 
 /**
  * @addtogroup data_structures

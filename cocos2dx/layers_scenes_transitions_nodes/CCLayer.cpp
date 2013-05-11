@@ -49,7 +49,6 @@ CCLayer::CCLayer()
 , m_pScriptTouchHandlerEntry(NULL)
 , m_pScriptKeypadHandlerEntry(NULL)
 , m_pScriptAccelerateHandlerEntry(NULL)
-, m_nTouchPriority(0)
 , m_eTouchMode(kCCTouchesAllAtOnce)
 {
     m_bIgnoreAnchorPointForPosition = true;

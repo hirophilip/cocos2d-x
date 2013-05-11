@@ -35,6 +35,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class CCArray;
+
 /**
  * @addtogroup data_structures
  * @{
@@ -79,6 +81,8 @@ public:
 
     /** compare to a c string */
     int compare(const char *) const;
+    
+    CCArray* componentsSeparatedByChar(const char c);
 
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);

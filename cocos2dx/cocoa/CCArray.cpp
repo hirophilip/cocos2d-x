@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCArray.h"
+#include "CCString.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -225,6 +226,16 @@ CCObject* CCArray::objectAtIndex(unsigned int index)
     CCAssert(index < data->num, "index out of range in objectAtIndex()");
 
     return data->arr[index];
+}
+
+CCString* CCArray::valueAtIndex(unsigned int index)
+{
+    CCString* pStr = dynamic_cast<CCString*>(objectAtIndex(index));
+    if (pStr == NULL)
+    {
+        pStr = CCString::create("");
+    }
+    return pStr;
 }
 
 CCObject* CCArray::lastObject()

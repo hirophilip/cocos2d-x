@@ -201,7 +201,7 @@ static EAGLView *view;
 
 - (void) dealloc
 {
-	CCLOGINFO(@"cocos2d: deallocing EAGLView %@", self);
+	CCLOGINFO([[NSString stringWithFormat:@"cocos2d: deallocing EAGLView %@", self] UTF8String]);
 	[super dealloc];
 }
 	

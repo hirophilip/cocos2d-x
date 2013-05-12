@@ -36,6 +36,7 @@
 //
 
 #include "B2ShapeCache.h"
+#include "B2Sprite.h"
 #include "Box2D.h"
 #include "cocos2d.h"
 
@@ -96,7 +97,7 @@ void B2ShapeCache::reset() {
 	shapeObjects.clear();
 }
 
-void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape) {
+void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape, B2Sprite* sprt) {
 	std::map<std::string, BodyDef *>::iterator pos = shapeObjects.find(string(shape));
 	assert(pos != shapeObjects.end());
 	
@@ -104,6 +105,7 @@ void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape) {
 
 	FixtureDef *fix = so->fixtures;
     while (fix) {
+        fix->fixture.userData = sprt;
         body->CreateFixture(&fix->fixture);
         fix = fix->next;
     }

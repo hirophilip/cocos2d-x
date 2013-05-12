@@ -37,6 +37,7 @@
 
 class BodyDef;
 class b2Body;
+class B2Sprite;
 
 using namespace cocos2d;
 
@@ -67,7 +68,7 @@ class B2ShapeCache {
 		* @param body the body
 		* @param shape the shape name
 		*/
-		void addFixturesToBody(b2Body *body, const char* shape);
+		void addFixturesToBody(b2Body *body, const char* shape, B2Sprite* sprt);
 		
 		/**
 		* Returns the anchor point for the shape with the name given

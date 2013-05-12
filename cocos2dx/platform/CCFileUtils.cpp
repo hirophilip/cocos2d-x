@@ -402,6 +402,17 @@ static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object,
         return node;
     }
     
+    // object is CCFloat
+    if (CCFloat *num = dynamic_cast<CCFloat *>(object))
+    {
+        tinyxml2::XMLElement* node = pDoc->NewElement("real");
+        char c[21];
+        sprintf(c, "%f", num->getValue());
+        tinyxml2::XMLText* content = pDoc->NewText(c);
+        node->LinkEndChild(content);
+        return node;
+    }
+    
     // object is CCArray
     if (CCArray *array = dynamic_cast<CCArray *>(object))
         return generateElementForArray(array, pDoc);

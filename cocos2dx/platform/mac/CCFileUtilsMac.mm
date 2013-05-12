@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <stack>
 #include "cocoa/CCString.h"
 #include "cocoa/CCInteger.h"
+#include "cocoa/CCFloat.h"
 #include "CCFileUtils.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
@@ -196,6 +197,13 @@ static void addCCObjectToNSDict(const char * key, CCObject* object, NSMutableDic
     // the object is a CCInteger
     if (CCInteger *element = dynamic_cast<CCInteger *>(object)) {
         NSNumber *numElement = [NSNumber numberWithInt:element->getValue()];
+        [dict setObject:numElement forKey:NSkey];
+        return;
+    }
+    
+    // the object is a CCInteger
+    if (CCFloat *element = dynamic_cast<CCFloat *>(object)) {
+        NSNumber *numElement = [NSNumber numberWithFloat:element->getValue()];
         [dict setObject:numElement forKey:NSkey];
         return;
     }

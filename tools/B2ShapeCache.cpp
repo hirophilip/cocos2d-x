@@ -98,7 +98,7 @@ void B2ShapeCache::reset() {
 }
 
 void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape, B2Sprite* sprt) {
-	std::map<std::string, BodyDef *>::iterator pos = shapeObjects.find(string(shape));
+	std::map<std::string, BodyDef *>::iterator pos = shapeObjects.find(std::string(shape));
 	assert(pos != shapeObjects.end());
 	
 	BodyDef *so = (*pos).second;
@@ -112,7 +112,7 @@ void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape, B2Sprite* 
 }
 
 cocos2d::CCPoint B2ShapeCache::anchorPointForShape(const char* shape) {
-	std::map<std::string, BodyDef *>::iterator pos = shapeObjects.find(string(shape));
+	std::map<std::string, BodyDef *>::iterator pos = shapeObjects.find(std::string(shape));
 	assert(pos != shapeObjects.end());
 	
 	BodyDef *bd = (*pos).second;

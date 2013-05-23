@@ -23,11 +23,10 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "B2Sprite.h"
 
 CCDebugNode::CCDebugNode(b2World* world) {
     m_b2World = world;
-    GLESDebugDraw* debugDraw = new GLESDebugDraw( PTM_RATIO );
+    GLESDebugDraw* debugDraw = new GLESDebugDraw( 32.f );
     m_b2World->SetDebugDraw(debugDraw);
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;

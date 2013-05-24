@@ -93,6 +93,18 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      */
     static CCString* create(const std::string& str);
+    
+    /** create a string with int, because there is limted support for CCInteger from file
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+    static CCString* create(const int i);
+
+    /** create a string with float, because there is limted support for CCFloat from file
+     *  @return A CCString pointer which is an autorelease object pointer,
+     *          it means that you needn't do a release operation unless you retain it.
+     */
+    static CCString* create(const float f);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
      *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.

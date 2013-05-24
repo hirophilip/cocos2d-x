@@ -172,6 +172,22 @@ CCString* CCString::create(const std::string& str)
     return pRet;
 }
 
+CCString* CCString::create(const int i)
+{
+    CCString* pRet = CCString::create("");
+    pRet->initWithFormat("%i", i);
+    
+    return pRet;
+}
+
+CCString* CCString::create(const float f)
+{
+    CCString* pRet = CCString::create("");
+    pRet->initWithFormat("%f", f);
+    
+    return pRet;
+}
+
 CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
 {
     CCString* pRet = NULL;

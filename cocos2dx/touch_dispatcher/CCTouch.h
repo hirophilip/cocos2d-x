@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
+#include <ctime>
 
 NS_CC_BEGIN
 
@@ -40,7 +41,8 @@ class CC_DLL CCTouch : public CCObject
 public:
     CCTouch() 
         : m_nId(0),
-        m_startPointCaptured(false)
+        m_startPointCaptured(false),
+        m_time(clock())
     {}
 
     /** returns the current touch location in OpenGL coordinates */
@@ -76,6 +78,7 @@ public:
         return m_nId;
     }
 
+    clock_t m_time;
 private:
     int m_nId;
     bool m_startPointCaptured;

@@ -546,7 +546,7 @@ void CCNode::cleanup()
 
 const char* CCNode::description()
 {
-    return CCString::createWithFormat("<CCNode | Tag = %d>", m_nTag)->getCString();
+    return CCString::createWithFormat("<CCNode | Tag = %d> position=%f,%f", m_nTag, m_obPosition.x, m_obPosition.y)->getCString();
 }
 
 // lazy allocs

@@ -231,4 +231,9 @@ CCString* CCString::createWithContentsOfFile(const char* pszFileName)
     return pRet;
 }
 
+void CCString::acceptVisitor(CCDataVisitor &visitor)
+{
+    visitor.visit(this);
+}
+
 NS_CC_END

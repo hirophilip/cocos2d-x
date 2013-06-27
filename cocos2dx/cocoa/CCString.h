@@ -56,7 +56,7 @@ public:
     CCString& operator= (const CCString& other);
 
     /** init a string with format, it's similar with the c function 'sprintf' */ 
-    bool initWithFormat(const char* format, ...);
+    bool initWithFormat(const char* format, ...) CC_FORMAT_PRINTF(2, 3);
 
     /** convert to int value */
     int intValue() const;
@@ -111,7 +111,7 @@ public:
      *  @return A CCString pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */ 
-    static CCString* createWithFormat(const char* format, ...);
+    static CCString* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
     /** create a string with binary data 
      *  @return A CCString pointer which is an autorelease object pointer,
@@ -124,6 +124,8 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      */
     static CCString* createWithContentsOfFile(const char* pszFileName);
+
+    virtual void acceptVisitor(CCDataVisitor &visitor);
 
 private:
 

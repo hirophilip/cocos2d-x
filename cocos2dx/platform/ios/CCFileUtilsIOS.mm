@@ -357,24 +357,6 @@ bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath
     return true;
 }
 
-bool CCFileUtilsIOS::writeToFile(CCDictionary *dict, const std::string &fullPath)
-{
-    //CCLOG("iOS||Mac CCDictionary %d write to file %s", dict->m_uID, fullPath.c_str());
-    NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-    
-    CCDictElement *element = NULL;
-    CCDICT_FOREACH(dict, element)
-    {
-        addCCObjectToNSDict(element->getStrKey(), element->getObject(), nsDict);
-    }
-    
-    NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
-    // do it atomically
-    [nsDict writeToFile:file atomically:YES];
-    
-    return true;
-}
-
 CCArray* CCFileUtilsIOS::createCCArrayWithContentsOfFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];

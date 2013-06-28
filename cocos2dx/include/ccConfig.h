@@ -168,7 +168,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
  */
 #ifndef CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
+#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 1
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_VAO

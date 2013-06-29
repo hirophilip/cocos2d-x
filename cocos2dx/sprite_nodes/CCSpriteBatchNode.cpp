@@ -77,9 +77,6 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
     m_blendFunc.dst = CC_BLEND_DST;
     m_pobTextureAtlas = new CCTextureAtlas();
     
-    //TODO: this is a memory leak, someone is not freeing this memory properly
-    m_pobTextureAtlas->retain();
-
     if (0 == capacity)
     {
         capacity = kDefaultSpriteBatchCapacity;

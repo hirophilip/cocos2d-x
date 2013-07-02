@@ -36,7 +36,6 @@
 //
 
 #include "B2ShapeCache.h"
-#include "B2Sprite.h"
 #include "Box2D.h"
 #include "cocos2d.h"
 
@@ -97,7 +96,7 @@ void B2ShapeCache::reset() {
 	shapeObjects.clear();
 }
 
-void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape, B2Sprite* sprt) {
+void B2ShapeCache::addFixturesToBody(b2Body *body, const char* shape, B2Node* sprt) {
 	std::map<std::string, BodyDef *>::iterator pos = shapeObjects.find(std::string(shape));
 	assert(pos != shapeObjects.end());
 	
@@ -162,10 +161,10 @@ void B2ShapeCache::addShapesWithFile(const char* plist) {
             basicData.density = static_cast<CCString *>(fixtureData->objectForKey("density"))->floatValue();
             basicData.restitution = static_cast<CCString *>(fixtureData->objectForKey("restitution"))->floatValue();
             basicData.isSensor = (bool)static_cast<CCString *>(fixtureData->objectForKey("isSensor"))->intValue();
-			if(fixtureData->objectForKey("id")){
-				basicData.userData = static_cast<CCString *>(fixtureData->objectForKey("id"));
-				callbackData = static_cast<CCString *>(fixtureData->objectForKey("id"))->intValue();
-			}
+//			if(fixtureData->objectForKey("id")){
+//				basicData.userData = static_cast<CCString *>(fixtureData->objectForKey("id"));
+//				callbackData = static_cast<CCString *>(fixtureData->objectForKey("id"))->intValue();
+//			}
 
 			std::string fixtureType = static_cast<CCString *>(fixtureData->objectForKey("fixture_type"))->getCString();
 			//CCString *fixtureType = static_cast<CCString *>(fixtureData->objectForKey("fixture_type"))->getCString();

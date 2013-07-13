@@ -272,6 +272,7 @@ public:
     virtual void setScaleX(float fScaleX);
     virtual void setScaleY(float fScaleY);
     virtual void setPosition(const CCPoint& pos);
+    virtual void setPosition(float x, float y);
     virtual void setRotation(float fRotation);
     virtual void setRotationX(float fRotationX);
     virtual void setRotationY(float fRotationY);

@@ -355,7 +355,7 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
         // set size
         m_obWinSizeInPoints = m_pobOpenGLView->getDesignResolutionSize();
         
-        createStatsLabel();
+        if (m_bDisplayStats) createStatsLabel();
         
         if (m_pobOpenGLView)
         {

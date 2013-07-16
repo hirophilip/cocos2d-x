@@ -49,7 +49,9 @@ CCTextureAtlas::CCTextureAtlas()
     ,m_bDirty(false)
     ,m_pTexture(NULL)
     ,m_pQuads(NULL)
-{}
+{
+CCLOGINFO(" allocing CCTextureAtlas %p.", this);
+}
 
 CCTextureAtlas::~CCTextureAtlas()
 {

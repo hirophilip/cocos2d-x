@@ -42,6 +42,9 @@ CCAnimationFrame::CCAnimationFrame()
 
 bool CCAnimationFrame::initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo)
 {
+#if COCOS2D_DEBUG > 1
+    CCLOGINFO( " init CCAnimationFrame %p %s", this, spriteFrame->frameName.c_str());
+#endif
     setSpriteFrame(spriteFrame);
     setDelayUnits(delayUnits);
     setUserInfo(userInfo);
@@ -51,7 +54,7 @@ bool CCAnimationFrame::initWithSpriteFrame(CCSpriteFrame* spriteFrame, float del
 
 CCAnimationFrame::~CCAnimationFrame()
 {    
-    CCLOGINFO( "cocos2d: deallocing %s", this);
+    CCLOGINFO( " deallocing CCAnimationFrame %p", this);
 
     CC_SAFE_RELEASE(m_pSpriteFrame);
     CC_SAFE_RELEASE(m_pUserInfo);
@@ -170,7 +173,7 @@ CCAnimation::CCAnimation()
 
 CCAnimation::~CCAnimation(void)
 {
-    CCLOGINFO("cocos2d, deallocing %p", this);
+    CCLOGINFO(" deallocing CCAnimation %p", this);
     CC_SAFE_RELEASE(m_pFrames);
 }
 

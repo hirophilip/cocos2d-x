@@ -196,6 +196,9 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
         }
 
         // add sprite frame
+#if COCOS2D_DEBUG > 1
+        spriteFrame->frameName = spriteFrameName;
+#endif
         m_pSpriteFrames->setObject(spriteFrame, spriteFrameName);
         spriteFrame->release();
     }

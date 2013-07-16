@@ -207,7 +207,7 @@ CCTextureCache::CCTextureCache()
 
 CCTextureCache::~CCTextureCache()
 {
-    CCLOGINFO("cocos2d: deallocing CCTextureCache.");
+    CCLOGINFO(" deallocing CCTextureCache.");
     need_quit = true;
 
     pthread_cond_signal(&s_SleepCondition);

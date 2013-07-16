@@ -142,7 +142,7 @@ CCBMFontConfiguration::CCBMFontConfiguration()
 
 CCBMFontConfiguration::~CCBMFontConfiguration()
 {
-    CCLOGINFO( "cocos2d: deallocing CCBMFontConfiguration" );
+    CCLOGINFO( " deallocing CCBMFontConfiguration" );
     this->purgeFontDefDictionary();
     this->purgeKerningDictionary();
     m_sAtlasName.clear();

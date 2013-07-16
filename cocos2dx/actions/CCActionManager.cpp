@@ -58,7 +58,7 @@ CCActionManager::CCActionManager(void)
 
 CCActionManager::~CCActionManager(void)
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO(" deallocing %p", this);
 
     removeAllActions();
 }

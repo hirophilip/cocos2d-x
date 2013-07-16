@@ -47,7 +47,7 @@ CCEGLView::CCEGLView(void)
 
 CCEGLView::~CCEGLView(void)
 {
-    CCLOG("cocos2d: deallocing CCEGLView %p", this);
+    CCLOG(" deallocing CCEGLView %p", this);
     s_sharedView = NULL;
 }
 

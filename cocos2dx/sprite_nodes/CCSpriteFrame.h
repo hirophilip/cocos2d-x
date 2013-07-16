@@ -149,6 +149,10 @@ protected:
     CCSize m_obOriginalSizeInPixels;
     CCTexture2D *m_pobTexture;
     std::string  m_strTextureFilename;
+#if COCOS2D_DEBUG > 1
+public:
+    std::string  frameName;
+#endif
 };
 
 // end of sprite_nodes group

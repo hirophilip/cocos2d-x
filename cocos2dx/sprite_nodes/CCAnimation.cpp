@@ -146,7 +146,7 @@ bool CCAnimation::initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float
     m_fDelayPerUnit = delayPerUnit;
     m_uLoops = loops;
 
-    setFrames(CCArray::createWithArray(arrayOfAnimationFrames));
+    setFrames(arrayOfAnimationFrames);
 
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(m_pFrames, pObj)

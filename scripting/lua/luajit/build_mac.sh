@@ -11,7 +11,7 @@ make clean
 make CC="gcc -m32 -arch i386" clean all
 
 if [ -f $SRCDIR/src/libluajit.a ]; then
-    mv $SRCDIR/src/libluajit.a $DESTDIR/libluajit2.a
+    mv $SRCDIR/src/libluajit.a $DESTDIR/libluajit.a
 fi;
 
 make clean

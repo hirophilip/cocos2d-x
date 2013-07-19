@@ -49,11 +49,13 @@ CCTextureAtlas::CCTextureAtlas()
     ,m_bDirty(false)
     ,m_pTexture(NULL)
     ,m_pQuads(NULL)
-{}
+{
+CCLOGINFO(" allocing CCTextureAtlas %p.", this);
+}
 
 CCTextureAtlas::~CCTextureAtlas()
 {
-    CCLOGINFO("cocos2d: CCTextureAtlas deallocing %p.", this);
+    CCLOGINFO(" deallocing CCTextureAtlas %p.", this);
 
     CC_SAFE_FREE(m_pQuads);
     CC_SAFE_FREE(m_pIndices);
@@ -62,6 +64,7 @@ CCTextureAtlas::~CCTextureAtlas()
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     glDeleteVertexArrays(1, &m_uVAOname);
+    ccGLBindVAO(0);    
 #endif
     CC_SAFE_RELEASE(m_pTexture);
     

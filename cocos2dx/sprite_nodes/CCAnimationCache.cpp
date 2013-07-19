@@ -66,7 +66,7 @@ CCAnimationCache::CCAnimationCache()
 
 CCAnimationCache::~CCAnimationCache()
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO(" deallocing CCAnimationCache %p", this);
     CC_SAFE_RELEASE(m_pAnimations);
 }
 

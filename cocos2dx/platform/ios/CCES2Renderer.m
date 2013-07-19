@@ -207,7 +207,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"cocos2d: deallocing %@", self);
+    NSLog(@" deallocing %@", self);
 
     // Tear down GL
     if (defaultFramebuffer_) {

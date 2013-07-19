@@ -80,7 +80,7 @@ CCTexture2D::~CCTexture2D()
     VolatileTexture::removeTexture(this);
 #endif
 
-    CCLOGINFO("cocos2d: deallocing CCTexture2D %u.", m_uName);
+    CCLOGINFO(" deallocing CCTexture2D %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
 
     if(m_uName)

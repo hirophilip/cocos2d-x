@@ -786,6 +786,11 @@ void CCSprite::setPosition(const CCPoint& pos)
     SET_DIRTY_RECURSIVELY();
 }
 
+void CCSprite::setPosition(float x, float y)
+{
+    setPosition(ccp(x, y));
+}
+
 void CCSprite::setRotation(float fRotation)
 {
     CCNode::setRotation(fRotation);

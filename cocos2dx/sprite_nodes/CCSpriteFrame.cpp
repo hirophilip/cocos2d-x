@@ -116,7 +116,7 @@ bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& 
 
 CCSpriteFrame::~CCSpriteFrame(void)
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO(" deallocing CCSpriteFrame %p", this);
     CC_SAFE_RELEASE(m_pobTexture);
 }
 

@@ -242,7 +242,7 @@ CCTexturePVR::CCTexturePVR()
 
 CCTexturePVR::~CCTexturePVR()
 {
-    CCLOGINFO( "cocos2d: deallocing CCTexturePVR" );
+    CCLOGINFO( " deallocing CCTexturePVR %p", this);
 
     if (m_uName != 0 && ! m_bRetainName)
     {
@@ -613,6 +613,7 @@ bool CCTexturePVR::createGLTexture()
 
 bool CCTexturePVR::initWithContentsOfFile(const char* path)
 {
+    CCLOGINFO( " init CCTexturePVR %p %s", this, path);
     unsigned char* pvrdata = NULL;
     int pvrlen = 0;
     

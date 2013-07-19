@@ -94,7 +94,7 @@ void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 
 CCGrabber::~CCGrabber()
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO(" deallocing CCGrabber %p", this);
     glDeleteFramebuffers(1, &m_FBO);
 }
 

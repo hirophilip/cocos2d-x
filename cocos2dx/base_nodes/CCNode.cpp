@@ -102,7 +102,7 @@ CCNode::CCNode(void)
 
 CCNode::~CCNode(void)
 {
-    CCLOGINFO( "cocos2d: deallocing" );
+    CCLOGINFO( " deallocing CCNode" );
     
     unregisterScriptHandler();
     if (m_nUpdateScriptHandler)

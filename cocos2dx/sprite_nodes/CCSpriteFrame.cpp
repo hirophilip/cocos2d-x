@@ -49,7 +49,7 @@ CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D *pobTexture, const C
     return pSpriteFrame;
 }
 
-CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const CCRect& rect, short rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
@@ -58,7 +58,7 @@ CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const C
     return pSpriteFrame;
 }
 
-CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, short rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
@@ -79,7 +79,7 @@ bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& 
     return initWithTextureFilename(filename, rectInPixels, false, CCPointZero, rectInPixels.size);
 }
 
-bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, short rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     m_pobTexture = pobTexture;
 
@@ -99,7 +99,7 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect,
     return true;
 }
 
-bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
+bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& rect, short rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     m_pobTexture = NULL;
     m_strTextureFilename = filename;

@@ -348,7 +348,7 @@ public:
      * Sets the texture rect, rectRotated and untrimmed size of the CCSprite in points.
      * It will update the texture coordinates and the vertex rectangle.
      */
-    virtual void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+    virtual void setTextureRect(const CCRect& rect, short rotated, const CCSize& untrimmedSize);
     
     /**
      * Sets the vertex rect.
@@ -413,10 +413,10 @@ public:
      */
     inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
-    /** 
+    /**
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) { return m_bRectRotated; }
+    inline int isTextureRectRotated(void) { return m_bRectRotated; }
     
     /** 
      * Returns the index used on the TextureAtlas. 
@@ -520,7 +520,7 @@ protected:
 
     // texture
     CCRect m_obRect;                            /// Retangle of CCTexture2D
-    bool   m_bRectRotated;                      /// Whether the texture is rotated
+    short  m_bRectRotated;                      /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
     CCPoint m_obOffsetPosition;

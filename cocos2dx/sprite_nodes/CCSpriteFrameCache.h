@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "textures/CCTexture2D.h"
 #include "cocoa/CCObject.h"
+#include <spine/Atlas.h>
 #include <set>
 #include <string>
 
@@ -65,6 +66,8 @@ public:
     ~CCSpriteFrameCache(void);
 
 private:
+    void addSpriteFramesWithAtlas(Atlas* atlas, CCTexture2D *pobTexture);
+    
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
     void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CCTexture2D *pobTexture);

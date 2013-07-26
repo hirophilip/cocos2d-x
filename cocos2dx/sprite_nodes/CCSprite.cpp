@@ -308,7 +308,7 @@ void CCSprite::setTextureRect(const CCRect& rect)
 }
 
 
-void CCSprite::setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize)
+void CCSprite::setTextureRect(const CCRect& rect, short rotated, const CCSize& untrimmedSize)
 {
     m_bRectRotated = rotated;
 
@@ -399,15 +399,26 @@ void CCSprite::setTextureCoords(CCRect rect)
         {
             CC_SWAP(left, right, float);
         }
-
-        m_sQuad.bl.texCoords.u = left;
-        m_sQuad.bl.texCoords.v = top;
-        m_sQuad.br.texCoords.u = left;
-        m_sQuad.br.texCoords.v = bottom;
-        m_sQuad.tl.texCoords.u = right;
-        m_sQuad.tl.texCoords.v = top;
-        m_sQuad.tr.texCoords.u = right;
-        m_sQuad.tr.texCoords.v = bottom;
+        
+        if (m_bRectRotated > 0) {
+            m_sQuad.bl.texCoords.u = left;
+            m_sQuad.bl.texCoords.v = top;
+            m_sQuad.br.texCoords.u = left;
+            m_sQuad.br.texCoords.v = bottom;
+            m_sQuad.tl.texCoords.u = right;
+            m_sQuad.tl.texCoords.v = top;
+            m_sQuad.tr.texCoords.u = right;
+            m_sQuad.tr.texCoords.v = bottom;
+        } else {
+            m_sQuad.bl.texCoords.u = right;
+            m_sQuad.bl.texCoords.v = bottom;
+            m_sQuad.br.texCoords.u = right;
+            m_sQuad.br.texCoords.v = top;
+            m_sQuad.tl.texCoords.u = left;
+            m_sQuad.tl.texCoords.v = bottom;
+            m_sQuad.tr.texCoords.u = left;
+            m_sQuad.tr.texCoords.v = top;
+        }
     }
     else
     {

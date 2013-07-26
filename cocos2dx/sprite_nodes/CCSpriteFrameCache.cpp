@@ -76,6 +76,32 @@ CCSpriteFrameCache::~CCSpriteFrameCache(void)
     CC_SAFE_DELETE(m_pLoadedFileNames);
 }
 
+void CCSpriteFrameCache::addSpriteFramesWithAtlas(Atlas* atlas, CCTexture2D *pobTexture) {
+    AtlasRegion* region = atlas->regions;
+    do {
+        std::string spriteFrameName = region->name;
+        CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(spriteFrameName);
+        if (spriteFrame)
+        {
+            continue;
+        }
+        // create frame
+        spriteFrame = new CCSpriteFrame();
+        spriteFrame->initWithTexture(pobTexture,
+                                     CCRectMake(region->x, region->y, region->width, region->height),
+                                     region->rotate*-1,
+                                     CCPointMake(region->offsetX, region->offsetY),
+                                     CCSizeMake((float)region->originalWidth, (float)region->originalHeight)
+                                     );
+        // add sprite frame
+#if COCOS2D_DEBUG > 1
+        spriteFrame->frameName = spriteFrameName;
+#endif
+        m_pSpriteFrames->setObject(spriteFrame, spriteFrameName);
+        spriteFrame->release();
+    } while ((region = region->next));
+}
+
 void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CCTexture2D *pobTexture)
 {
     /*
@@ -133,7 +159,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             spriteFrame = new CCSpriteFrame();
             spriteFrame->initWithTexture(pobTexture, 
                                         CCRectMake(x, y, w, h), 
-                                        false,
+                                        0,
                                         CCPointMake(ox, oy),
                                         CCSizeMake((float)ow, (float)oh)
                                         );
@@ -141,7 +167,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
         else if(format == 1 || format == 2) 
         {
             CCRect frame = CCRectFromString(frameDict->valueForKey("frame")->getCString());
-            bool rotated = false;
+            short rotated = 0;
 
             // rotation
             if (format == 2)
@@ -168,7 +194,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             CCPoint spriteOffset = CCPointFromString(frameDict->valueForKey("spriteOffset")->getCString());
             CCSize spriteSourceSize = CCSizeFromString(frameDict->valueForKey("spriteSourceSize")->getCString());
             CCRect textureRect = CCRectFromString(frameDict->valueForKey("textureRect")->getCString());
-            bool textureRotated = frameDict->valueForKey("textureRotated")->boolValue();
+            short textureRotated = (frameDict->valueForKey("textureRotated")->boolValue()) ? 1 : 0;
 
             // get aliases
             CCArray* aliases = (CCArray*) (frameDict->objectForKey("aliases"));
@@ -235,51 +261,61 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
     if (m_pLoadedFileNames->find(pszPlist) == m_pLoadedFileNames->end())
     {
-        std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
-        CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
-
-        string texturePath("");
-
-        CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
-        if (metadataDict)
-        {
-            // try to read  texture file name from meta data
-            texturePath = metadataDict->valueForKey("textureFileName")->getCString();
-        }
-
-        if (! texturePath.empty())
-        {
-            // build texture path relative to plist file
-            texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
-        }
-        else
-        {
-            // build texture path by replacing file extension
-            texturePath = pszPlist;
-
-            // remove .xxx
-            size_t startPos = texturePath.find_last_of("."); 
-            texturePath = texturePath.erase(startPos);
-
-            // append .png
-            texturePath = texturePath.append(".png");
-
-            CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
-        }
-
-        CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
-
-        if (pTexture)
-        {
-            addSpriteFramesWithDictionary(dict, pTexture);
+        
+        string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
+        size_t extPos = string(pszPlist).find_last_of(".");
+        int cmp = strcmp(&pszPlist[extPos], ".atlas");
+        
+        if ( !cmp ) {
+            Atlas* atlas = Atlas_readAtlasFile(fullPath.c_str());
+            CCTextureAtlas* texAtlas = static_cast<CCTextureAtlas*>(atlas->pages->rendererObject);
+            addSpriteFramesWithAtlas(atlas, texAtlas->getTexture());
             m_pLoadedFileNames->insert(pszPlist);
-        }
-        else
-        {
-            CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
-        }
+            Atlas_dispose(atlas);
+        } else {
+            CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
+            string texturePath("");
+            CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
+            if (metadataDict)
+            {
+                // try to read  texture file name from meta data
+                texturePath = metadataDict->valueForKey("textureFileName")->getCString();
+            }
 
-        dict->release();
+            if (! texturePath.empty())
+            {
+                // build texture path relative to plist file
+                texturePath = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
+            }
+            else
+            {
+                // build texture path by replacing file extension
+                texturePath = pszPlist;
+
+                // remove .xxx
+                size_t startPos = texturePath.find_last_of("."); 
+                texturePath = texturePath.erase(startPos);
+
+                // append .png
+                texturePath = texturePath.append(".png");
+
+                CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
+            }
+
+            CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+
+            if (pTexture)
+            {
+                addSpriteFramesWithDictionary(dict, pTexture);
+                m_pLoadedFileNames->insert(pszPlist);
+            }
+            else
+            {
+                CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
+            }
+
+            dict->release();
+        }
     }
 
 }

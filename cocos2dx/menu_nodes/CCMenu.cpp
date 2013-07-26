@@ -133,8 +133,6 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         this->ignoreAnchorPointForPosition(true);
         setAnchorPoint(ccp(0.5f, 0.5f));
         this->setContentSize(s);
-
-        setPosition(ccp(s.width/2, s.height/2));
         
         if (pArrayOfItems != NULL)
         {

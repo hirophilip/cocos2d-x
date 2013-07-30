@@ -383,18 +383,27 @@ void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
 {
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(plist);
-    CCDictionary* dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
-
-    removeSpriteFramesFromDictionary((CCDictionary*)dict);
-
-    // remove it from the cache
-    set<string>::iterator ret = m_pLoadedFileNames->find(plist);
-    if (ret != m_pLoadedFileNames->end())
-    {
-        m_pLoadedFileNames->erase(ret);
+    size_t extPos = string(plist).find_last_of(".");
+    int cmp = strcmp(&plist[extPos], ".atlas");
+    
+    if ( !cmp ) {
+        Atlas* atlas = Atlas_readAtlasFile(fullPath.c_str());
+        removeSpriteFramesFromAtlas(atlas);
+        Atlas_dispose(atlas);
+    } else {
+        CCDictionary* dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
+        
+        removeSpriteFramesFromDictionary((CCDictionary*)dict);
+        
+        // remove it from the cache
+        set<string>::iterator ret = m_pLoadedFileNames->find(plist);
+        if (ret != m_pLoadedFileNames->end())
+        {
+            m_pLoadedFileNames->erase(ret);
+        }
+        
+        dict->release();
     }
-
-    dict->release();
 }
 
 void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictionary)
@@ -411,6 +420,23 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictiona
         }
     }
 
+    m_pSpriteFrames->removeObjectsForKeys(keysToRemove);
+}
+
+void CCSpriteFrameCache::removeSpriteFramesFromAtlas(Atlas* atlas)
+{
+    CCArray* keysToRemove = CCArray::create();
+    AtlasRegion* region = atlas->regions;
+    do {
+        std::string spriteFrameName = region->name;
+        CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(spriteFrameName);
+        if (spriteFrame)
+        {
+            keysToRemove->addObject(CCString::create(spriteFrameName));
+        }
+        spriteFrame->release();
+    } while ((region = region->next));
+    
     m_pSpriteFrames->removeObjectsForKeys(keysToRemove);
 }
 

@@ -120,6 +120,10 @@ private:
     * @since v0.99.5
     */
     void removeSpriteFramesFromDictionary(CCDictionary* dictionary);
+    
+    /** Removes multiple Sprite Frames from Atlas.
+     */
+    void removeSpriteFramesFromAtlas(Atlas* atlas);
 public:
     /** Removes all Sprite Frames associated with the specified textures.
     * It is convenient to call this method when a specific texture needs to be removed.

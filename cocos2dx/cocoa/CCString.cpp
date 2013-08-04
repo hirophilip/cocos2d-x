@@ -131,7 +131,7 @@ int CCString::compare(const char * pStr) const
     return strcmp(getCString(), pStr);
 }
 
-CCArray* CCString::componentsSeparatedByChar(const char c)
+CCArray* CCString::componentsSeparatedByChar(const char c) const
 {
     std::stringstream ss(m_sString);
     std::string item;

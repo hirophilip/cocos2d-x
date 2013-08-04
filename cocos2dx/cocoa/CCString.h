@@ -82,7 +82,7 @@ public:
     /** compare to a c string */
     int compare(const char *) const;
     
-    CCArray* componentsSeparatedByChar(const char c);
+    CCArray* componentsSeparatedByChar(const char c) const;
 
     /* override functions */
     virtual CCObject* copyWithZone(CCZone* pZone);

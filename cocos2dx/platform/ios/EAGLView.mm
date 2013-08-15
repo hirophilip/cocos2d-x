@@ -152,10 +152,12 @@ static EAGLView *view = 0;
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
 		
-		if ([view respondsToSelector:@selector(setContentScaleFactor:)])
-		{
-			view.contentScaleFactor = [[UIScreen mainScreen] scale];
-		}
+        if( UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+            if ([view respondsToSelector:@selector(setContentScaleFactor:)])
+            {
+                view.contentScaleFactor = [[UIScreen mainScreen] scale];
+            }
+        }
     }
         
     return self;

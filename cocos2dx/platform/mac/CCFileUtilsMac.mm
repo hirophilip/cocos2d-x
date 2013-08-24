@@ -244,6 +244,16 @@ std::string CCFileUtilsMac::getWritablePath()
     return strRet;
 }
 
+std::string CCFileUtilsMac::getAppSupportPath()
+{
+    // save to document folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    std::string strRet = [documentsDirectory UTF8String];
+    strRet.append("/");
+    return strRet;
+}
+
 bool CCFileUtilsMac::isFileExist(const std::string& strFilePath)
 {
     if (0 == strFilePath.length())
@@ -336,6 +346,11 @@ bool CCFileUtilsMac::writeToFile(CCDictionary *dict, const std::string &fullPath
     }
     
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString *directory = [file stringByDeletingLastPathComponent];
+    if (![fm fileExistsAtPath:directory isDirectory:nil]) {
+        [fm createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     // do it atomically
     return [nsDict writeToFile:file atomically:YES];
 }

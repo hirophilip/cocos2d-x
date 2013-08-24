@@ -267,6 +267,8 @@ public:
      */
     virtual std::string getWritablePath() = 0;
     
+    virtual std::string getAppSupportPath() = 0;
+    
     /**
      *  Checks whether a file exists.
      *

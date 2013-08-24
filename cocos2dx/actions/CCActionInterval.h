@@ -116,7 +116,7 @@ public:
     /** helper constructor to create an array of sequence-able actions */
     static CCSequence* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
     /** creates the action */
-    static CCSequence* createWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    static CCSequence* createTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
 protected:
     CCFiniteTimeAction *m_pActions[2];
@@ -242,7 +242,7 @@ public:
     static CCSpawn* create(CCArray *arrayOfActions);
 
     /** creates the Spawn action */
-    static CCSpawn* createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+    static CCSpawn* createTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
 protected:
     CCFiniteTimeAction *m_pOne;

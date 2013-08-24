@@ -81,11 +81,32 @@ CCMenuItem::~CCMenuItem()
 void CCMenuItem::selected()
 {
     m_bSelected = true;
+    if (willZoom) {
+        CCAction *action = getActionByTag(kZoomActionTag);
+        if (action)
+        {
+            this->stopAction(action);
+        }
+        else
+        {
+            m_fOriginalScale = this->getScale();
+        }
+        
+        CCAction *zoomAction = CCScaleTo::create(0.1f, m_fOriginalScale * 1.2f);
+        zoomAction->setTag(kZoomActionTag);
+        this->runAction(zoomAction);
+    }
 }
 
 void CCMenuItem::unselected()
 {
     m_bSelected = false;
+    if (willZoom) {
+        this->stopActionByTag(kZoomActionTag);
+        CCAction *zoomAction = CCScaleTo::create(0.1f, m_fOriginalScale);
+        zoomAction->setTag(kZoomActionTag);
+        this->runAction(zoomAction);
+    }
 }
 
 void CCMenuItem::registerScriptTapHandler(int nHandler)
@@ -109,6 +130,10 @@ void CCMenuItem::activate()
 {
     if (m_bEnabled)
     {
+        if (willZoom) {
+            this->stopAllActions();
+            this->setScale( m_fOriginalScale );
+        }
         if (m_pListener && m_pfnSelector)
         {
             (m_pListener->*m_pfnSelector)(this);
@@ -226,8 +251,6 @@ void CCMenuItemLabel::activate()
 {
     if(m_bEnabled)
     {
-        this->stopAllActions();
-        this->setScale( m_fOriginalScale );
         CCMenuItem::activate();
     }
 }
@@ -238,20 +261,6 @@ void CCMenuItemLabel::selected()
     if(m_bEnabled)
     {
         CCMenuItem::selected();
-        
-        CCAction *action = getActionByTag(kZoomActionTag);
-        if (action)
-        {
-            this->stopAction(action);
-        }
-        else
-        {
-            m_fOriginalScale = this->getScale();
-        }
-        
-        CCAction *zoomAction = CCScaleTo::create(0.1f, m_fOriginalScale * 1.2f);
-        zoomAction->setTag(kZoomActionTag);
-        this->runAction(zoomAction);
     }
 }
 
@@ -261,10 +270,6 @@ void CCMenuItemLabel::unselected()
     if(m_bEnabled)
     {
         CCMenuItem::unselected();
-        this->stopActionByTag(kZoomActionTag);
-        CCAction *zoomAction = CCScaleTo::create(0.1f, m_fOriginalScale);
-        zoomAction->setTag(kZoomActionTag);
-        this->runAction(zoomAction);
     }
 }
 

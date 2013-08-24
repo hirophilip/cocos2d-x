@@ -58,6 +58,7 @@ protected:
      */
     bool m_bSelected;
     bool m_bEnabled;
+    float m_fOriginalScale;
 
 public:
     CCMenuItem()
@@ -66,6 +67,8 @@ public:
     , m_pListener(NULL)            
     , m_pfnSelector(NULL)
     , m_nScriptTapHandler(0)
+    , m_fOriginalScale(0.0)
+    , willZoom(false)
     {}
     virtual ~CCMenuItem();
 
@@ -99,7 +102,7 @@ public:
     
     /** set the target/selector of the menu item*/
     void setTarget(CCObject *rec, SEL_MenuHandler selector);
-
+    bool willZoom;
 protected:
     CCObject*       m_pListener;
     SEL_MenuHandler    m_pfnSelector;
@@ -122,8 +125,9 @@ class CC_DLL CCMenuItemLabel : public CCMenuItem
 public:
     CCMenuItemLabel()
     : m_pLabel(NULL)
-    , m_fOriginalScale(0.0)
-    {}
+    {
+        willZoom = true;
+    }
     virtual ~CCMenuItemLabel();
 
     /** creates a CCMenuItemLabel with a Label, target and selector */
@@ -146,7 +150,6 @@ public:
     
 protected:
     ccColor3B    m_tColorBackup;
-    float        m_fOriginalScale;
 };
 
 

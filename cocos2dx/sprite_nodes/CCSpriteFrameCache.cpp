@@ -390,6 +390,8 @@ void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
         Atlas* atlas = Atlas_readAtlasFile(fullPath.c_str());
         removeSpriteFramesFromAtlas(atlas);
         Atlas_dispose(atlas);
+        CCTextureAtlas* texAtlas = static_cast<CCTextureAtlas*>(atlas->pages->rendererObject);
+        CCTextureCache::sharedTextureCache()->removeTexture(texAtlas->getTexture());
     } else {
         CCDictionary* dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
         
@@ -434,7 +436,6 @@ void CCSpriteFrameCache::removeSpriteFramesFromAtlas(Atlas* atlas)
         {
             keysToRemove->addObject(CCString::create(spriteFrameName));
         }
-        spriteFrame->release();
     } while ((region = region->next));
     
     m_pSpriteFrames->removeObjectsForKeys(keysToRemove);
